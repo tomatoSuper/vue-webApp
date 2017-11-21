@@ -1,0 +1,244 @@
+body, html {
+  background-color: #F5F5F5;
+  width: 100%;
+  height: 100%; }
+
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent; }
+
+body {
+  color: #212121;
+  font: .24rem/1 PingFangSC-Regular,"microsoft yahei";
+  letter-spacing: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400; }
+
+li {
+  list-style: none; }
+
+a, del, em, i, ins {
+  text-decoration: none;
+  color: #333; }
+
+em, i {
+  font-style: normal; }
+b{
+  font-weight: normal;
+}
+img {
+  width: 100%;
+  border: 0;
+  vertical-align: middle; }
+
+button, input, textarea, select {
+  outline: 0;
+  -webkit-appearance: none; }
+
+input::-webkit-inner-spin-button, input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type=number] {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield; }
+
+input[type=button] {
+  -webkit-border-radius: 0;
+  border-radius: 0; }
+
+input[type=text], input[type=tel], input[type=password], input[type=number] {
+  border: none;
+  background: none;
+  tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent; }
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none; }
+
+.clearfix::after, .clearfix::before {
+  content: " ";
+  display: block;
+  visibility: hidden;
+  clear: both;
+  height: 0;
+  line-height: 0; }
+
+.clearfix {
+  zoom: 1; }
+
+#app {
+  min-height: 100%;
+  max-width: 750px;
+  min-width: 320px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative; }
+
+#app button.gma-cur {
+  color: #000;
+  background: none; }
+
+.gma-btn {
+  height: .8rem;
+  line-height: .8rem;
+  text-align: center;
+  display: block;
+  margin: 0 1rem;
+  border-radius: 2px;
+  border: none;
+  background-color: #6A7D8F;
+  font-size: .3rem; }
+
+.hide {
+  opacity: 0; }
+
+.show {
+  opacity: 1; }
+
+.act-ago {
+  background: #e02e08;
+  color: rgba(255, 255, 255, 0.6); }
+
+.acted-yet {
+  color: #000;
+  background-color: #808080; }
+
+#notice {
+  height: .6rem;
+  line-height: .6rem;
+  border-radius: .1rem;
+  width: 40%;
+  margin: .3rem auto;
+  text-align: center;
+  font-size: .26rem;
+  color: #fff;
+  background-color: #808080;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+#mask {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9; }
+
+.mask-hide {
+  display: none; }
+
+.mask-show {
+  display: block; }
+
+#wait-dialog {
+  width: 48%;
+  height: 2.4rem;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  background: url(../img/loading.gif) no-repeat center center;
+  background-size: contain;
+  z-index: 333; }
+
+#dialog {
+  width: 60%;
+  height: 3rem;
+  line-height: 3rem;
+  text-align: center;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  font-size: .3rem;
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  z-index: 9999;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+.search-village-fail {
+  width: 100%;
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%); }
+
+.search-img {
+  width: 1.6rem;
+  height: 1.44rem;
+  margin: 0 auto;
+  background: url("../img/result_search@2x.png") no-repeat center center;
+  background-size: contain; }
+
+.search-content {
+  text-align: center;
+  width: 100%;
+  padding: .3rem 0;
+  font-size: .28rem;
+  color: #999999; }
+
+#res-msg {
+  width: 60%;
+  margin: .4rem auto;
+  font-size: .28rem;
+  padding: .2rem 0;
+  border: 1px solid #DEDEDE;
+  color: grey;
+  background: none;
+  border-radius: .1rem;
+  text-align: center;
+  position: relative; }
+.text-left {
+  text-align: left;
+}
+
+@media (min-width: 120px) {
+  html {
+    font-size: 40px; } }
+
+@media (min-width: 320px) {
+  html {
+    font-size: 44px; } }
+
+@media (min-width: 375px) {
+  html {
+    font-size: 50px; } }
+
+@media (min-width: 410px) {
+  html {
+    font-size: 56px; } }
+
+@media (min-width: 455px) {
+  html {
+    font-size: 60px; } }
+
+@media (min-width: 510px) {
+  html {
+    font-size: 80px; } }
+
+@media (min-width: 610px) {
+  html {
+    font-size: 90px; } }
+
+@media (min-width: 750px) {
+  html {
+    font-size: 100px; } }
+::-webkit-scrollbar {
+  width: 0;
+}

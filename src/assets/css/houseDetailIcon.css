@@ -1,0 +1,76 @@
+/*忘记搞sass或者less，好痛苦，后面维护的同学可以搞下来玩玩*/
+.hardware-list li span,.hardware-list li i {
+  display: inline-block;
+}
+.hardware-list li i {
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-background-size: contain;
+  background-size: contain;
+}
+.hardware-list li span {
+  line-height:0.48rem;
+  font-size:0.24rem;
+  color: #808080;
+}
+.hardware-list li i {
+  height: 0.88rem;
+  width:0.66rem;
+}
+.hardware-list li i.television {
+  background-image: url("http://dev-esheyi.yingjiashenghuo.com/xaImages/television2x.png");
+}
+.hardware-list li i.air {
+  background-image: url("http://dev-esheyi.yingjiashenghuo.com/xaImages/air2x.png");
+}
+.hardware-list li i.ambry {
+  background-image: url("http://dev-esheyi.yingjiashenghuo.com/xaImages/ambry2x.png");
+}
+.hardware-list li i.wifi {
+  background-image: url("http://dev-esheyi.yingjiashenghuo.com/xaImages/wifi2x.png");
+}
+.hardware-list li i.bed {
+  background-image: url("http://dev-esheyi.yingjiashenghuo.com/xaImages/bed2x.png");
+}
+.hardware-list li i.icebox {
+  width: 0.46rem;
+  background-image: url("http://dev-esheyi.yingjiashenghuo.com/xaImages/icebox2x.png");
+}
+.hardware-list li i.eattable {
+  background-image: url("http://dev-esheyi.yingjiashenghuo.com/xaImages/eattable2x.png");
+}
+.hardware-list li i.desk {
+  background-image: url("http://dev-esheyi.yingjiashenghuo.com/xaImages/desk2x.png");
+}
+.hardware-list li i.microwave {
+  background-image: url("http://dev-esheyi.yingjiashenghuo.com/xaImages/microwave2x.png");
+}
+.hardware-list li i.heating {
+  background-image: url("http://dev-esheyi.yingjiashenghuo.com/xaImages/heating2x.png");
+}
+.hardware-list li i.sofa {
+  background-image: url("http://dev-esheyi.yingjiashenghuo.com/xaImages/sofa2x.png");
+}
+.hardware-list li i.wardrobe {
+  background-image: url("http://dev-esheyi.yingjiashenghuo.com/xaImages/wardrobe2x.png");
+}
+.hardware-list li i.kitchenAndToilet {
+  background-image: url("http://dev-esheyi.yingjiashenghuo.com/xaImages/kitchenAndToilet2x.png");
+}
+.hardware-list li i.washer {
+  width:0.56rem;
+  background-image: url("http://dev-esheyi.yingjiashenghuo.com/xaImages/washer2x.png");
+}
+.hardware-list li i.heater {
+  background-image: url("http://dev-esheyi.yingjiashenghuo.com/xaImages/heater2x.png");
+}
+.hardware-list li i.stove {
+  background-image: url("http://dev-esheyi.yingjiashenghuo.com/xaImages/stove2x.png");
+}
+.hardware-list li i.chair {
+  background-image: url("http://dev-esheyi.yingjiashenghuo.com/xaImages/chair2x.png");
+}
+.hardware-list li i.rangeHoods {
+  background-image: url("http://dev-esheyi.yingjiashenghuo.com/xaImages/rangeHoods2x.png");
+}
+

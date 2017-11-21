@@ -1,0 +1,546 @@
+/*搜索样式*/
+.search {
+  position: relative;
+  /*min-height:100%;*/
+}
+/*搜索头部-------开始*/
+.search-title {
+  position: fixed;
+  width: 100%;
+  height: .86rem;
+  line-height: .86rem;
+  -webkit-box-shadow: 1px 0 2px #bbb;
+  -moz-box-shadow: 1px 0 2px #bbb;
+  box-shadow: 1px 0 2px #bbb;
+  border-bottom: 1px solid #ccc;
+
+}
+.search-title > .goBack,.search-title > input {
+  float: left;
+}
+.search-title > .goBack {
+  width: 3%;
+  height: .86rem;
+  background: url('../img/back@2x.png') center center no-repeat;
+  -webkit-background-size: contain;
+  background-size: contain;
+  left: 0;
+  border: 0 solid rgba(255,255,255,0);
+  border-right-width: .32rem;
+  border-left-width: .32rem;
+}
+.search-title > input {
+  width: 70%;
+  /*background-color: #ebebeb;*/
+  margin:0.1rem 0.1rem;
+  height:0.66rem;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  line-height:0.6rem;
+  padding:0 0.3rem;
+  border:1px solid #b0b0b0;
+  border-radius: 4px;
+}
+.search-title > .ico-search {
+  position: fixed;
+  right: 0;
+  top:0;
+  height: .86rem;
+  border-right:0.24rem solid transparent;
+  border-left:0.24rem solid transparent;
+}
+.ico-search {
+  display: block;
+  width: 5%;
+  height:0.66rem;
+  background: url('../img/search@2x.png') center center no-repeat;
+  -webkit-background-size: contain;
+  background-size: contain;
+}
+/*搜索头部-------结束*/
+
+/*缓存记录和匹配热词列表-------开始*/
+#match-list,#history-list {
+  position: fixed;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  left:0;
+  top:0.88rem;
+  padding:0.1rem 0.3rem 0.3rem;
+  background-color: #fff;
+  z-index:99999;
+}
+#match-list > li,#history-list > li {
+  height: 0.66rem;
+  line-height:0.66rem;
+  border-bottom: 2px solid #eee;
+  font-size:0.32rem;
+  text-align: left;
+  color: #666;
+}
+#match-list > li + li {
+  margin-top:0.3rem;
+}
+#history-list > li {
+  font-size:0.28rem;
+}
+#history-list > li + li {
+  margin-top:0.2rem;
+}
+#match-list > li > a {
+  color: #e02e08;
+  margin:0 5%;
+}
+#match-list > li > .ico-search {
+  float: left;
+}
+#history-list > #clear-history-list{
+  text-align: center;
+  position: relative;
+  border:1px solid #aaa;
+  color: #888;
+  margin-top:0.5rem;
+}
+#history-list > #clear-history-list::after {
+  position: absolute;
+  content: '';
+  width: .3rem;
+  height: .32rem;
+  right:10%;
+  top:50%;
+  background: url('../img/delete@2x.png') center center no-repeat;
+  background-size: contain;
+  -webkit-transform: translate(0,-50%);
+  -moz-transform: translate(0,-50%);
+  -ms-transform: translate(0,-50%);
+  -o-transform: translate(0,-50%);
+  transform: translate(0,-50%);
+}
+/*搜索记录和匹配列表-------结束*/
+
+/*搜索条件导航-------开始*/
+.search-case-list {
+  position: fixed;
+  width:100%;
+  height: 0.76rem;
+  line-height:0.76rem;
+  left:0;
+  top:0.88rem;
+  border-bottom: 1px solid #ccc;
+}
+.search-case-list, .search-title {
+  z-index:9999;
+  background-color: #fff;
+}
+.search-case-list > li {
+  float: left;
+  width: 25%;
+  text-align: center;
+  font-size:0.2rem;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.search-case-list > li + li {
+  border-left: 1px solid #ccc;
+}
+.search-case-list > li.active {
+  color: #e02e08;
+}
+/*搜索条件导航-------结束*/
+
+/*搜索条件面板-------开始*/
+.search-case-panel {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+  z-index:999;
+}
+.search-case-panel .panel {
+  position: absolute;
+  left:0;
+  top:1.64rem;
+  width: 100%;
+  height: 8rem;
+  background-color: #fff;
+  overflow: hidden;
+}
+.panel-title {
+  line-height:0.66rem;
+  font-size:0.28rem;
+  text-align: left;
+  color: #e02e08;
+  padding:0 0.5rem;
+}
+.panel-content {
+  padding: 0.2rem 0.5rem 0.4rem;
+  /*border-bottom:1px dashed #aaa;*/
+}
+.panel .panel-content:nth-last-of-type(1) {
+  border-bottom: 0 none;
+}
+
+#more-cases .panel-content input,#more-cases .panel-content .col-line,#signTime .col-line {
+  float: left;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+}
+.panel-content input {
+  border:1px solid #bbb;
+  width: 45%;
+  height: .66rem;
+  line-height:0.66rem;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding:0 0.2rem;
+  color: #666;
+}
+#more-cases .panel-content .col-line,#signTime .col-line {
+  width: 6%;
+  margin:0.3rem 2%;
+  height: 1px;
+  background-color: #bbb;
+}
+.panel .panel-btns {
+  position: absolute;
+  width: 100%;
+  height: .86rem;
+  line-height:0.86rem;
+  font-size:0.32rem;
+  left:0;
+  bottom:0;
+}
+.panel .panel-btns > a {
+  float: left;
+  width: 50%;
+  height: 100%;
+}
+.panel .panel-btns .reset {
+  background-color: #f0f0f0;
+}
+.panel-btns .sure {
+  background-color: #e02e08;
+  color: #ffffff;
+}
+/*搜索条件面板-------结束*/
+
+/*区域搜索-------开始*/
+#zoneList > ul {
+  float: left;
+  width: 33.33%;
+  height:100%;
+  overflow-y: scroll;
+}
+#zoneList > ul > li{
+  display: block;
+  line-height:0.8rem;
+  font-size:0.24rem;
+}
+#zoneList > ul > li.chosen {
+  background-color: #e02e08;
+  color: #ffffff;
+}
+#zoneList2 {
+  background-color: #f5f5f5;
+}
+#zoneList3 {
+  background-color: #eee;
+}
+/*区域搜索-------结束*/
+
+/*单价区间-------开始*/
+#unit-price .panel,#more-cases .panel {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+}
+#unit-price .panel-title {
+  margin-top:0.3rem;
+}
+#unit-price .panel,#signTime .panel {
+  height: 3.8rem;
+}
+#unit-price .panel-content {
+  border-bottom:0 none;
+}
+/*单价区间-------结束*/
+
+/*滑块样式-------开始*/
+.range-title {
+  padding:0 0.3rem;
+  font-size:0.32rem;
+  text-align: left;
+  line-height:0.66rem;
+  color: #e02e08;
+}
+.range-content {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding:0 0.3rem;
+  margin-top:0.3rem;
+}
+.range-bar {
+  width: 100%;
+  height: 6px;
+  border-radius: 23px;
+  -webkit-border-radius: 23px;
+  background-color: #e02e08;
+  border-top: 20px solid #fff;
+  border-bottom: 20px solid #fff;
+  position: relative;
+}
+.range-bar .range1,.range-bar .range2 {
+  position: absolute;
+  top:0;
+  width:10%;
+  height:100%;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  background-color: #dedede;
+}
+.range-bar .range1 {
+  left:0;
+}
+.range-bar .range2 {
+  right:0;
+}
+.range-bar .range1 .range-lump,.range-bar .range2 .range-lump {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  top:50%;
+  width: 20px;
+  height: 20px;
+  border:1px solid #ddd;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  background-color: #fff;
+  z-index:9999;
+}
+.range-bar .range1 .range-lump {
+  right:0;
+  -webkit-transform: translate(50%,-50%);
+  -moz-transform: translate(50%,-50%);
+  -ms-transform: translate(50%,-50%);
+  -o-transform: translate(50%,-50%);
+  transform: translate(50%,-50%);
+}
+.range-bar .range2 .range-lump {
+  left:0;
+  -webkit-transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  -o-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+.range-lump > i {
+  position: absolute;
+  top:-150%;
+  line-height:0.56rem;
+  font-size:0.32rem;
+  /*-webkit-transform: translate(-50%,0);*/
+  /*-moz-transform: translate(-50%,0);*/
+  /*-ms-transform: translate(-50%,0);*/
+  /*-o-transform: translate(-50%,0);*/
+  /*transform: translate(-50%,0);*/
+}
+.range1 .range-lump > i {
+  left:-50%;
+}
+.range2 .range-lump > i {
+  right:-50%;
+}
+/*滑块样式-------结束*/
+
+/*房源类型-------开始*/
+.houseType-list > li{
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  float: left;
+  height: 0.66rem;
+  line-height:0.62rem;
+  font-size:0.24rem;
+  width: 23%;
+  margin:5px 1%;
+  border:1px solid #aaa;
+  color: #888;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+}
+.houseType-list > li.chosen {
+  border-color: #e02e08;
+  background-color: #e02e08;
+  color: #ffffff;
+}
+/*房源类型-------结束*/
+/*时间选择-------开始*/
+.panel-content .date {
+  float: left;
+  width: 50%;
+}
+#signTime #date-start,#signTime #date-end {
+  width: 50%;
+  -webkit-transform: translate(0,0);
+  transform: translate(0,0);
+}
+#signTime #date-start{
+  left:0;
+}
+#signTime .panel-content {
+  padding-top: 0.8rem;
+  border-bottom:0 none;
+}
+#signTime #date-end {
+  right:0;
+}
+#signTime .v-modal {
+  display: none;
+}
+#signTime .date-select {
+  border:1px solid #aaa;
+  height: .66rem;
+  line-height:0.66rem;
+  font-size:0.32rem;
+  color: #888;
+}
+#signTime .date-select.active {
+  border-color: #e02e08;
+  color: #e02e08;
+}
+#signTime .date-select > p{
+  float: left;
+  width: 40%;
+}
+#signTime .picker-toolbar {
+  display: none;
+}
+.picker-item {
+  font-size:0.28rem;
+  padding:0 0.16rem;
+}
+/*时间选择-------结束*/
+/*房源列表-------开始*/
+.list-container {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  /*height: 100%;*/
+  padding-top:1.64rem;
+}
+.list-container .list-count {
+  text-align: left;
+  padding: 0 0.2rem;
+  line-height:0.6rem;
+  background-color: #fff;
+  font-size:0.28rem;
+}
+.list-container .list-count span {
+  color: #e02e08;
+  margin:0 0.1rem;
+
+}
+.mint-loadmore {
+  background-color: #eee;
+}
+#deal-house-list li,#deal-village-list li{
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding:0 0.2rem;
+  width: 100%;
+  font-size:0.28rem;
+  background-color: #fff;
+  margin-top: 0.2rem;
+  text-align: left;
+}
+.deal-house-title,.deal-village-title {
+  padding: .16rem 0;
+  font-size: .32rem;
+  line-height: .52rem;
+  color: #212121;
+  border-bottom: 1px solid #ddd;
+}
+.deal-village-title span,.deal-village-content span,.deal-house-title span,.deal-village span {
+  color: red;
+}
+.deal-house-content,.deal-village-content {
+  position: relative;
+  color: #666666;
+}
+.deal-village-content {
+  height: 1.6rem;
+}
+
+.deal-house-msg {
+  float: left;
+  width: 70%;
+  padding:.2rem 0;
+}
+.deal-house-msg > p {
+  line-height:0.6rem;
+  padding-left:0.6rem;
+  position: relative;
+}
+.deal-house-msg .deal-village::before,.deal-house-area::before,.deal-house-signDate::before,.deal-house-agency::before {
+  position: absolute;
+  content: '';
+  width: 0.32rem;
+  height: 0.6rem;
+  left:0.1rem;
+  top:0;
+}
+.deal-village::before {
+  background: url("../img/house@2x.png") center center no-repeat;
+  -webkit-background-size: contain;
+  background-size: contain;
+}
+.deal-house-area::before {
+  background: url("../img/floors@3x.png") center center no-repeat;
+  -webkit-background-size: contain;
+  background-size: contain;
+}
+.deal-house-signDate::before {
+  background: url("../img/timer@3x.png") center center no-repeat;
+  -webkit-background-size: contain;
+  background-size: contain;
+}
+.deal-house-agency::before {
+  background: url("../img/digitial@3x.png") center center no-repeat;
+  -webkit-background-size: contain;
+  background-size: contain;
+}
+.deal-price {
+  float: right;
+  width: 28%;
+  text-align: center;
+}
+.deal-total-price {
+  color: #e02e08;
+  font:.44rem/1.8rem bold;
+}
+.deal-village-content > div {
+  float: left;
+  width: 50%;
+  padding:.2rem 0;
+  line-height:0.6rem;
+  font-size:0.28rem;
+}
+.deal-village-content > div + div {
+  text-align: right;
+}
+/*房源列表-------结束*/
+/*加载图标样式*/
+.loadingMore {
+  margin-top:0.2rem;
+  display: inline-block;
+  padding:5px 0;
+}

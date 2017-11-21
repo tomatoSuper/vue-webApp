@@ -1,0 +1,49 @@
+.form-wrapper {
+
+}
+.form-wrapper .header {
+  height: 2.4rem;
+  background-color: #e02e08;
+}
+
+.group-container {
+
+}
+textarea {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  appearance: none;
+  -webkit-appearance: none;
+  resize: none;
+}
+.btn {
+  display: inline-block;
+  background-color: #ccc;
+  color: #ffffff;
+}
+button.btn {
+  padding: 0;
+  border:0 none;
+  height: 0.88rem;
+  line-height:0.88rem;
+  background-color: #aaa;
+  color: #fff;
+  font-size:0.28rem;
+  text-align: center;
+}
+.btn.btn-submit {
+  background-color: #FF790E;
+}
+.picker-select {
+  position: fixed;
+  bottom:0;
+  left:0;
+  width: 100%;
+  background-color: #fff;
+}
+.picker-select .picker-item.picker-selected {
+  color: #FF790E;
+}
+.picker-select .picker-center-highlight::before,.picker-select .picker-center-highlight::after {
+  background-color: #FF790E;
+}
