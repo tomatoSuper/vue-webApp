@@ -1,7 +1,7 @@
 {
   "name": "vue20170814",
   "version": "1.0.0",
-  "description": "fangcy",
+  "description": "A simple webApp, base on Vue.js",
   "author": "tomatoSuper <dannyencode@163.com>",
   "private": true,
   "scripts": {
