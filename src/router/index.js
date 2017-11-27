@@ -17,7 +17,6 @@ import renterLogin from '@/components/login/renter'
 import landlordLogin from '@/components/login/landlord'
 // 房东端
 import landlord from '@/components/landlord/index'
-import landlordAuth from '@/components/landlord/landlordAuth'
 import landlordHouseList from '@/components/landlord/landlordHouseList'
 import landlordLeasesList from '@/components/landlord/landlordLeasesList'
 import landlordHouseDetail from '@/components/landlord/landlordHouseDetail'
@@ -27,7 +26,6 @@ import renterHouseList from '@/components/renter/renterHouseList'
 import renterHouseDetail from '@/components/renter/renterHouseDetail'
 import renterLeasesList from '@/components/renter/renterLeasesList'
 import houseListForRent from '@/components/renter/houseListForRent'
-import rentInfo from '@/components/renter/rentInfo'
 import rentSearchCache from '@/components/renter/rentSearchCache'
 // 签约合同
 import addContract from '@/components/contract/addContract'
@@ -42,6 +40,8 @@ import uploadIDCard from '@/components/verification/uploadIDCard'
 import dblRange from '@/components/bricksSon/doubleRange'
 import cascade from '@/components/bricksSon/zoneLink'
 import uploadFile from '@/components/bricksSon/uploadFile'
+import layout from '@/components/demos/nesting/layout'
+import father from '@/components/demos/nesting/father'
 
 Vue.use(Router)
 export default new Router({
@@ -52,6 +52,16 @@ export default new Router({
       component: index
     },
     {
+      path: '/layout',
+      name: 'layout',
+      component: layout
+    },
+    {
+      path: '/father',
+      name: 'father',
+      component: father
+    },
+    {
       path: '/login/:id',
       name: 'login',
       children: [
@@ -60,11 +70,6 @@ export default new Router({
       ],
       component: Login
     },
-    // {
-    //   path: '/login/renter',
-    //   name: 'login',
-    //   component: Login
-    // },
     {
       path: '/unAuth',
       name: 'unAuth',
@@ -104,11 +109,6 @@ export default new Router({
       component: renterHouseDetail
     },
     {
-      path: '/rentInfo',
-      name: 'rentInfo',
-      component: rentInfo
-    },
-    {
       path: '/rentSearchCache',
       name: 'rentSearchCache',
       component: rentSearchCache
@@ -142,11 +142,6 @@ export default new Router({
       path: '/uploadIDCard',
       name: 'uploadIDCard',
       component: uploadIDCard
-    },
-    {
-      path: '/landlordAuth',
-      name: 'landlordAuth',
-      component: landlordAuth
     },
     {
       path: '/uploadFile',

@@ -17,7 +17,8 @@
           <div class="lease-content">
             <p>编码：{{lease.contractNo}}</p>
             <p>租客姓名：{{lease.tenantName}}</p>
-            <p>租约时间：{{lease.contractValidityStartTime | date}} -- {{lease.contractValidityEndTime | date}}</p>
+            <!--<p>租约时间：{{lease.contractValidityStartTime | date}} &#45;&#45; {{lease.contractValidityEndTime | date}}</p>-->
+            <p>租约时间：{{lease.contractValidityStartTime}}</p>
           </div>
         </li>
       </ul>
@@ -55,6 +56,7 @@
           limit: 10
         },
         leaseList: [],
+        dataList: [],
         noMoreData: false,
         topLoading: false,
         bottomLoaded: false
@@ -66,52 +68,71 @@
 //      if (token === null) {
 //        this.$router.push({ path: '/' })
 //      } else {}
-//      this.leaseList = [
-//        {
-//          address: '天河小区19号楼2单元 101室',
-//          status: '待确认',
-//          renterName: '张维真',
-//          rentTime: '2017/11/13-2018/11/12',
-//          leaseNo: 'XAFY09765'
-//        },
-//        {
-//          address: 'ewq小区19号楼2单元 101室',
-//          status: '待确认',
-//          renterName: '王麻子',
-//          rentTime: '2017/11/13-2018/11/12',
-//          leaseNo: 'XAFY09765'
-//        },
-//        {
-//          address: 'ss小区19号楼2单元 101室',
-//          status: '生效中',
-//          renterName: '张小泉',
-//          rentTime: '2017/11/13-2018/11/12',
-//          leaseNo: 'XAFY09765'
-//        },
-//        {
-//          address: '和谐小区19号楼2单元 101室',
-//          status: '已作废',
-//          renterName: '李二狗',
-//          rentTime: '2017/11/13-2018/11/12',
-//          leaseNo: 'XAFY09765'
-//        },
-//        {
-//          address: '共康小区19号楼2单元 101室',
-//          status: '待确认',
-//          renterName: '郭德纲',
-//          rentTime: '2017/11/13-2018/11/12',
-//          leaseNo: 'XAFY09765'
-//        }
-//      ]
+      this.dataList = [
+        {
+          leaseAddress: '天河小区19号楼2单元 101室',
+          contractStatus: '0',
+          tenantName: '张维真',
+          contractValidityStartTime: '2017/11/13-2018/11/12',
+          contractNo: 'XAFY09765'
+        },
+        {
+          leaseAddress: 'ewq小区19号楼2单元 101室',
+          contractStatus: '0',
+          tenantName: '王麻子',
+          contractValidityStartTime: '2017/11/13-2018/11/12',
+          contractNo: 'XAFY09765'
+        },
+        {
+          leaseAddress: 'ss小区19号楼2单元 101室',
+          contractStatus: '1',
+          tenantName: '张小泉',
+          contractValidityStartTime: '2017/11/13-2018/11/12',
+          contractNo: 'XAFY09765'
+        },
+        {
+          leaseAddress: '和谐小区19号楼2单元 101室',
+          contractStatus: '2',
+          tenantName: '李二狗',
+          contractValidityStartTime: '2017/11/13-2018/11/12',
+          contractNo: 'XAFY09765'
+        },
+        {
+          leaseAddress: '共康小区19号楼2单元 101室',
+          contractStatus: '0',
+          tenantName: '郭德纲',
+          contractValidityStartTime: '2017/11/13-2018/11/12',
+          contractNo: 'XAFY09765'
+        }
+      ]
     },
     mounted () {
 //      从缓存中获取房东角色的用户信息，由于要获取成对象类型的数据，所以要在第二个参数中传入 true
       let landlordInfo = cache.get(LANDLORD_INFO, true)
       console.log(landlordInfo)
 //      this.sendData.id = landlordInfo.id
-      this.getLeaseList()
+//      this.getLeaseList()
+      this.topLoading = true
+      this.renderList()
     },
     methods: {
+      renderList () {
+        let myVue = this
+        console.log(myVue.sendData.page)
+        setTimeout(s => {
+          if (myVue.sendData.page < 3 && myVue.sendData.page > 0) {
+            this.topLoading = false
+            this.dataList.forEach(function (ele) {
+              myVue.leaseList.push(ele)
+            })
+            myVue.sendData.page++
+            myVue.bottomLoaded = false
+          } else {
+            myVue.bottomLoaded = false
+            myVue.noMoreData = true
+          }
+        }, 1000)
+      },
       getLeaseList () {
         let myVue = this
         this.get({
@@ -141,7 +162,8 @@
               myVue.leaseList = []
               myVue.topLoading = false
               myVue.noMoreData = false
-              myVue.getLeaseList()
+//              myVue.getLeaseList()
+              myVue.renderList()
             }, 1000)
           }
         }
@@ -152,7 +174,8 @@
       loadBottom () {
         this.bottomLoaded = true
         this.$refs.loadmore.onBottomLoaded()
-        this.getLeaseList()
+//        this.getLeaseList()
+        this.renderList()
       },
       goToLeaseDetail (data) {
         let id = data.id

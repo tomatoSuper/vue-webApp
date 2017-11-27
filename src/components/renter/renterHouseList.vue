@@ -48,6 +48,7 @@
     name: 'landlordHouseList',
     data () {
       return {
+        dataList: [],
         houseList: [],
         sendData: {
           page: 1,
@@ -61,83 +62,119 @@
     created () {
     },
     mounted () {
-//      this.houseList = [
-//        {
-//          houseNo: 'hqwuiejq12131',
-//          districtName: '新安县',
-//          address: '永安路33号',
-//          vilage: '测试小区',
-//          houseType: '3室1厅2卫',
-//          buildingArea: '50',
-//          rentalPrice: '4500',
-//          houseImages: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123820_20170510103843.png,' +
-//          'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123827_20170510103843.png' +
-//          'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123833_20170510103843.png'
-//        },
-//        {
-//          houseNo: 'hqwuiejq12131',
-//          districtName: '新安县',
-//          address: '永安路33号',
-//          vilage: '测试小区',
-//          houseType: '3室1厅2卫',
-//          buildingArea: '50m²',
-//          rentalPrice: '4500',
-//          houseImages: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123820_20170510103843.png,' +
-//          'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123827_20170510103843.png' +
-//          'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123833_20170510103843.png'
-//        },
-//        {
-//          houseNo: 'hqwuiejq12131',
-//          districtName: '新安县',
-//          address: '永安路33号',
-//          vilage: '测试小区',
-//          houseType: '3室1厅2卫',
-//          buildingArea: '50m²',
-//          rentalPrice: '4500',
-//          houseImages: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123820_20170510103843.png,' +
-//          'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123827_20170510103843.png' +
-//          'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123833_20170510103843.png'
-//        },
-//        {
-//          houseNo: 'hqwuiejq12131',
-//          districtName: '新安县',
-//          address: '永安路33号',
-//          vilage: '测试小区',
-//          houseType: '3室1厅2卫',
-//          buildingArea: '50m²',
-//          rentalPrice: '4500',
-//          houseImages: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123820_20170510103843.png,' +
-//          'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123827_20170510103843.png' +
-//          'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123833_20170510103843.png'
-//        },
-//        {
-//          houseNo: 'hqwuiejq12131',
-//          districtName: '新安县',
-//          address: '永安路33号',
-//          vilage: '测试小区',
-//          houseType: '3室1厅2卫',
-//          buildingArea: '50m²',
-//          rentalPrice: '4500',
-//          houseImages: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123820_20170510103843.png,' +
-//          'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123827_20170510103843.png' +
-//          'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123833_20170510103843.png'
-//        },
-//        {
-//          houseNo: 'hqwuiejq12131',
-//          districtName: '新安县',
-//          address: '永安路33号',
-//          vilage: '测试小区',
-//          houseType: '3室1厅2卫',
-//          buildingArea: '50m²',
-//          rentalPrice: '4500',
-//          houseImages: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123820_20170510103843.png,' +
-//          'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123827_20170510103843.png' +
-//          'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123833_20170510103843.png'
-//        }
-//      ]
-      this.getHouseList()
+      this.dataList = [
+        {
+          id: 'xa-012312o3i12',
+          houseNo: 'hqwuiejq12131',
+          districtName: '新安县',
+          address: '永安路33号',
+          vilage: '测试小区',
+          houseType: '3室1厅2卫',
+          buildingArea: '50',
+          rentalPrice: '4500',
+          houseImages: [
+            {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123820_20170510103843.png'},
+            {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123827_20170510103843.png'},
+            {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123833_20170510103843.png'}
+          ]
+        },
+        {
+          id: 'xa-012312o3i12',
+          houseNo: 'hqwuiejq12131',
+          districtName: '新安县',
+          address: '永安路33号',
+          vilage: '测试小区',
+          houseType: '3室1厅2卫',
+          buildingArea: '50m²',
+          rentalPrice: '4500',
+          houseImages: [
+            {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123820_20170510103843.png'},
+            {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123827_20170510103843.png'},
+            {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123833_20170510103843.png'}
+          ]
+        },
+        {
+          id: 'xa-012312o3i12',
+          houseNo: 'hqwuiejq12131',
+          districtName: '新安县',
+          address: '永安路33号',
+          vilage: '测试小区',
+          houseType: '3室1厅2卫',
+          buildingArea: '50m²',
+          rentalPrice: '4500',
+          houseImages: [
+            {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123820_20170510103843.png'},
+            {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123827_20170510103843.png'},
+            {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123833_20170510103843.png'}
+          ]
+        },
+        {
+          id: 'xa-012312o3i12',
+          houseNo: 'hqwuiejq12131',
+          districtName: '新安县',
+          address: '永安路33号',
+          vilage: '测试小区',
+          houseType: '3室1厅2卫',
+          buildingArea: '50m²',
+          rentalPrice: '4500',
+          houseImages: [
+            {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123820_20170510103843.png'},
+            {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123827_20170510103843.png'},
+            {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123833_20170510103843.png'}
+          ]
+        },
+        {
+          id: 'xa-012312o3i12',
+          houseNo: 'hqwuiejq12131',
+          districtName: '新安县',
+          address: '永安路33号',
+          vilage: '测试小区',
+          houseType: '3室1厅2卫',
+          buildingArea: '50m²',
+          rentalPrice: '4500',
+          houseImages: [
+            {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123820_20170510103843.png'},
+            {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123827_20170510103843.png'},
+            {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123833_20170510103843.png'}
+          ]
+        },
+        {
+          id: 'xa-012312o3i12',
+          houseNo: 'hqwuiejq12131',
+          districtName: '新安县',
+          address: '永安路33号',
+          vilage: '测试小区',
+          houseType: '3室1厅2卫',
+          buildingArea: '50m²',
+          rentalPrice: '4500',
+          houseImages: [
+            {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123820_20170510103843.png'},
+            {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123827_20170510103843.png'},
+            {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123833_20170510103843.png'}
+          ]
+        }
+      ]
+//      this.getHouseList()
+      this.topLoading = true
+      this.renderList()
     },
     methods: {
+      renderList () {
+        let myVue = this
+        setTimeout(s => {
+          if (myVue.sendData.page < 3 && myVue.sendData.page > 0) {
+            this.topLoading = false
+            this.dataList.forEach(function (ele) {
+              myVue.houseList.push(ele)
+            })
+            myVue.sendData.page++
+            myVue.bottomLoaded = false
+          } else {
+            myVue.bottomLoaded = false
+            myVue.noMoreData = true
+          }
+        }, 1000)
+      },
       getHouseList () {
         let myVue = this
         this.get({
@@ -174,7 +211,8 @@
               myVue.houseList = []
               this.topLoading = false
               myVue.noMoreData = false
-              myVue.getHouseList()
+//              myVue.getHouseList()
+              myVue.renderList()
             }, 1000)
           }
         }
@@ -185,7 +223,8 @@
       loadBottom () {
         this.bottomLoaded = true
         this.$refs.loadmore.onBottomLoaded()
-        this.getHouseList()
+//        this.getHouseList()
+        this.renderList()
       },
       goToHouseDetail (data) {
         let id = data.id
@@ -240,7 +279,4 @@
   .mint-loadmore {
     background-color: transparent;
   }
-  /*.loadingMore {*/
-    /*margin-top:0.16rem;*/
-  /*}*/
 </style>

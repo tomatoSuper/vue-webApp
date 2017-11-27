@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="login-logo">雄安租房租客端</div>
+    <div class="login-logo">Role_B端</div>
   </div>
 </template>
 <script>

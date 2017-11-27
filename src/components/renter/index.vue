@@ -3,7 +3,7 @@
     <div class="page-top">
       <div class="header">
         <a href="javascript:;" class="goBack" @click.stop.prevent="toIndex"></a>
-        <h2>房源列表</h2>
+        <h2>Role_B列表</h2>
       </div>
       <ul class="tabBar clearfix">
         <li v-for="tab in tabList" :class="tab.code === search.type? 'chosen':''" @click.stop.prevent="checkAuthStatus(tab)"><span>{{tab.text}}</span></li>
@@ -39,9 +39,9 @@
       console.log(this.search.type)
       let token = cache.get(TENANT_TOKEN)
       console.log(token)
-      if (token === null) {
-        this.$router.push({ path: '/' })
-      } else {}
+//      if (token === null) {
+//        this.$router.push({ path: '/' })
+//      } else {}
     },
     methods: {
       toIndex () {
@@ -49,7 +49,7 @@
       },
       checkAuthStatus (data) {
         this.search.type = data.code
-        if (data.text === '租约') {
+        if (data.code === '2') {
           this.$router.push({ path: '/renter/leaseList' })
         } else {
           this.$router.push({ path: '/renter' })

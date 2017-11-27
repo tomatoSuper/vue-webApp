@@ -3,16 +3,16 @@
     <router-view></router-view>
     <form id="loginForm" name="loginForm" novalidate @submit.prevent="submit" role="form">
         <div>
-          <input  tabindex="1" type="text" v-validate="'required|mobile'" name="phone" onautocomplete="off" placeholder="请输入您的手机号码"  autocomplete="off" maxlength="11" v-model="login.phone">
-          <a href="javascript:;" class="btn" :class="errors.has('phone') || btnSms.touched?'':login.phone.length ? 'ok':''" @click="getSMScode">{{btnSms.text}}</a>
+          <input  tabindex="1" type="text" v-validate="'required|mobile'" name="phone" onautocomplete="off" placeholder="请输入您的手机号码"  autocomplete="off" maxlength="11" v-model="loginData.phone">
+          <a href="javascript:;" class="btn" :class="errors.has('phone') || btnSms.touched?'':loginData.phone.length ? 'ok':''" @click="getSMScode">{{btnSms.text}}</a>
         </div>
         <p><span v-show="errors.has('phone')" class="help is-danger">{{ errors.first('phone') }}</span></p>
         <div>
-          <input tabindex="2" v-bind ="{'type':type}" v-validate="'required'" name="code" onautocomplete="off" placeholder="请输入验证码" minlength="6" maxlength="10" v-model="login.code">
+          <input tabindex="2" v-bind ="{'type':type}" v-validate="'required'" name="code" onautocomplete="off" placeholder="请输入验证码" minlength="6" maxlength="10" v-model="loginData.code">
           <i id="icon-eyes" :class="type == 'password'?'close':'open'" @click="showPwd"></i>
         </div>
         <p><span v-show="errors.has('code')" class="help is-danger">{{ errors.first('code') }}</span></p>
-        <button type="submit" :class="!btnSubmit.touched && !errors.has('phone') && !errors.has('code') && login.phone.length && login.code ? 'ok': ''">登录</button>
+        <button type="submit" :class="!btnSubmit.touched && !errors.has('phone') && !errors.has('code') && loginData.phone.length && loginData.code ? 'ok': ''">登录</button>
         <p class="explain">未注册的用户将自动注册,点击登录视为同意注册</p>
         <p class="footer">©2017 研耀(上海)信息科技有限公司</p>
     </form>
@@ -27,12 +27,14 @@
     data () {
       return {
         btnSms: {
-          counter: '',
-          time: 60,
+          timeMax: 30,
+          textInit: '获取验证码',
+          time: 30,
           text: '获取验证码',
+          counter: '',
           touched: false
         },
-        login: {
+        loginData: {
           phone: '',
           code: '',
           loginType: ''
@@ -48,7 +50,7 @@
     created () {
       let path = this.$route.path
       path = path.split('/')
-      this.login.loginType = path[path.length - 1]
+      this.loginData.loginType = path[path.length - 1]
       const dictionary = {
         zh_CN: {
           custom: {
@@ -58,95 +60,107 @@
         }
       }
       Validator.updateDictionary(dictionary)
-      if (this.login.loginType === 'TENANT') {
+      if (this.loginData.loginType === 'TENANT') {
         let renterNo = cache.get(TENANT_ACCOUNT)
         if (renterNo) {
-          this.login.phone = renterNo
+          this.loginData.phone = renterNo
         }
       } else {
         let landlordNo = cache.get(LANDLORD_ACCOUNT)
         if (landlordNo) {
-          this.login.phone = landlordNo
+          this.loginData.phone = landlordNo
         }
       }
     },
     methods: {
       getSMScode () {
         let myVue = this
-        let _case = this.errors.has('phone') ? 0 : !this.btnSms.touched && this.login.phone.length ? 1 : 0
+        let _case = this.errors.has('phone') ? 0 : !this.btnSms.touched && this.loginData.phone.length ? 1 : 0
         if (_case) {
           this.btnSms.touched = true
-          let url = getSmsPath + '/' + this.login.phone
-          this.get({
-            url,
-            success (data) {
-              myVue.$toast({
-                message: data.msg,
-                duration: 1000
-              })
-            }
-          })
           if (myVue.btnSms.time > 0) {
             myVue.btnSms.text = myVue.btnSms.time --
             this.btnSms.counter = setInterval(() => {
               myVue.btnSms.text = myVue.btnSms.time --
               if (myVue.btnSms.time < 0) {
                 clearInterval(myVue.btnSms.counter)
-                myVue.btnSms.text = '获取验证码'
-                myVue.btnSms.time = 60
+                myVue.btnSms.text = myVue.btnSms.textInit
+                myVue.btnSms.time = myVue.btnSms.timeMax
                 myVue.btnSms.touched = false
               }
             }, 1000)
           }
         }
       },
-      submit (e) {
-        this.$validator.validateAll().then((result) => {
-          const myVue = this
-          if (result && !myVue.btnSubmit.touched) {
-            myVue.btnSubmit.touched = true
-            this.post({
-              url: loginPath,
-              sendData: myVue.login,
-              success (data) {
-                myVue.$toast({
-                  message: '登录成功',
-                  duration: 1000
-                })
-                if (myVue.login.loginType === 'TENANT') {
-                  cache.set(TENANT_ACCOUNT, myVue.login.phone)
-                  cache.set(TENANT_TOKEN, data.token)
-                  cache.set(TENANT_INFO, JSON.stringify(data.userInfo))
-                  myVue.$router.push({ path: '/renter' })
-                } else {
-                  cache.set(LANDLORD_ACCOUNT, myVue.login.phone)
-                  cache.set(LANDLORD_TOKEN, data.token)
-                  cache.set(LANDLORD_INFO, JSON.stringify(data.userInfo))
-                  myVue.$router.push({ path: '/landlord' })
-                }
-              },
-              failed (data, obj, x, h) {
-                clearTimeout(myVue.toastTimer)
-                myVue.toastTimer = setTimeout(function () {
-                  myVue.btnSubmit.touched = false
-                }, 2000)
-                if (obj.$toast) {
-                  obj.$toast({
-                    message: data.msg,
-                    duration: 2000
-                  })
-                }
-              },
-              error () {
-                clearTimeout(myVue.toastTimer)
-                myVue.toastTimer = setTimeout(() => {
-                  myVue.btnSubmit.touched = false
-                }, 2000)
-              }
+      btnGetSMS () {
+        let myVue = this
+        let url = getSmsPath + '/' + this.loginData.phone
+        this.get({
+          url,
+          success (data) {
+            myVue.$toast({
+              message: data.msg,
+              duration: 1000
             })
           }
         })
+      },
+      submit (e) {
+        this.$validator.validateAll().then((result) => {
+          if (result && !this.btnSubmit.touched) {
+            this.btnSubmit.touched = true
+            if (this.loginData.loginType === 'TENANT') {
+              cache.set(TENANT_TOKEN, new Date().getTime())
+              this.$router.push({ path: '/renter' })
+            } else {
+              cache.set(LANDLORD_TOKEN, new Date().getTime())
+              this.$router.push({ path: '/landlord' })
+            }
+          }
+        })
         return false
+      },
+      loginSubmit () {
+        const myVue = this
+        this.post({
+          url: loginPath,
+          sendData: myVue.login,
+          success (data) {
+            myVue.$toast({
+              message: '登录成功',
+              duration: 1000
+            })
+            if (myVue.loginData.loginType === 'TENANT') {
+              cache.set(TENANT_ACCOUNT, myVue.loginData.phone)
+              cache.set(TENANT_TOKEN, data.token)
+              cache.set(TENANT_INFO, JSON.stringify(data.userInfo))
+              myVue.$router.push({ path: '/renter' })
+            } else {
+              cache.set(LANDLORD_ACCOUNT, myVue.loginData.phone)
+              cache.set(LANDLORD_TOKEN, data.token)
+              cache.set(LANDLORD_INFO, JSON.stringify(data.userInfo))
+              myVue.$router.push({ path: '/landlord' })
+            }
+          },
+          failed (data, obj, x, h) {
+            clearTimeout(myVue.toastTimer)
+            myVue.toastTimer = setTimeout(function () {
+              myVue.btnSubmit.touched = false
+            }, 2000)
+            if (obj.$toast) {
+              obj.$toast({
+                message: data.msg,
+                duration: 2000
+              })
+            }
+          },
+          error () {
+            clearTimeout(myVue.toastTimer)
+            myVue.toastTimer = setTimeout(() => {
+              myVue.btnSubmit.touched = false
+            }, 2000)
+          }
+        })
       },
       showPwd () {
         this.type = this.type === 'password' ? 'text' : 'password'

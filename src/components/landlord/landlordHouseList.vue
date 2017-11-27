@@ -12,7 +12,7 @@
           <ul class="houseList">
             <li v-for="house in houseList">
               <div class="house-title clearfix">
-                <span class="address">{{ house.vilage + house.blockNo + '号楼' + house.unitNo + '单元' + house.roomNo + '室'}}</span>
+                <span class="address">{{ house.village + house.blockNo + '号楼' + (house.unitNo?house.unitNo + '单元':'') + house.roomNo + '室'}}</span>
                 <span class="houseNo">编码：{{house.serialNum}}</span>
                 <!--'整租','合租'-->
                 <i class="icon-rentType" :class="house.rentType === '整租'?'unshared' : 'shared'"></i>
@@ -50,6 +50,9 @@
             :class="'loadingMore'"
             v-show="bottomLoaded"
           ></mt-spinner>
+          <div v-if="noMoreData" class="no-more-data">
+            <span>没有更多数据了</span>
+          </div>
         </mt-loadmore>
       </div>
     </div>
@@ -69,6 +72,7 @@
           landlordId: ''
         },
         houseList: [],
+        dataList: [],
         topLoading: false,
         bottomLoaded: false,
         noMoreData: false
@@ -82,78 +86,123 @@
 //        this.$router.push({ path: '/' })
 //      } else {
 //      }
-//      this.get({
-//        url: landlordHouseListPath,
-//        sendData: {}
-//      })
-//      this.houseList = [
-//        { houseNo: '0000001',
-//          village: '天河小区',
-//          address: '11号楼1单元101',
-//          rentType: '合',
-//          children: [
-//          {roomName: '房间A', rentStatus: '已租', renterName: '张维真', rentPrice: '3000'},
-//          {roomName: '房间B', rentStatus: '已租', renterName: '陈碧', rentPrice: '3000'},
-//          {roomName: '房间C', rentStatus: '已租', renterName: '王二', rentPrice: '1000'},
-//          {roomName: '房间D', rentStatus: '已租', renterName: '张三丰', rentPrice: '5000'},
-//          {roomName: '房间E', rentStatus: '未租', renterName: '', rentPrice: '3200'},
-//          {roomName: '房间F', rentStatus: '未租', renterName: '', rentPrice: '3000'}
-//          ]
-//        },
-//        { houseNo: '0000002',
-//          village: '宏源小区',
-//          address: '3号楼1单元901',
-//          rentType: '整',
-//          children: [
-//            {roomName: '901室', rentStatus: '已租', renterName: '', rentPrice: '3000'}
-//          ]
-//        },
-//        { houseNo: '0000003',
-//          village: '平安小区',
-//          address: '16号楼301',
-//          rentType: '整',
-//          children: [
-//            {roomName: '301室', rentStatus: '未租', renterName: '', rentPrice: '3000'}
-//          ]
-//        },
-//        { houseNo: '0000001',
-//          village: '天河小区',
-//          address: '11号楼1单元101',
-//          rentType: '合',
-//          children: [
-//            {roomName: '房间A', rentStatus: '已租', renterName: '张维真', rentPrice: '3000'},
-//            {roomName: '房间B', rentStatus: '已租', renterName: '陈碧', rentPrice: '3000'},
-//            {roomName: '房间C', rentStatus: '已租', renterName: '王二', rentPrice: '1000'},
-//            {roomName: '房间D', rentStatus: '已租', renterName: '张三丰', rentPrice: '5000'},
-//            {roomName: '房间E', rentStatus: '未租', renterName: '', rentPrice: '3200'},
-//            {roomName: '房间F', rentStatus: '未租', renterName: '', rentPrice: '3000'}
-//          ]
-//        },
-//        { houseNo: '0000002',
-//          village: '宏源小区',
-//          address: '3号楼1单元901',
-//          rentType: '整',
-//          children: [
-//            {roomName: '901室', rentStatus: '已租', renterName: '', rentPrice: '3000'}
-//          ]
-//        },
-//        { houseNo: '0000003',
-//          village: '平安小区',
-//          address: '16号楼301',
-//          rentType: '整',
-//          children: [
-//            {roomName: '301室', rentStatus: '未租', renterName: '', rentPrice: '3000'}
-//          ]
-//        }
-//      ]
+      this.dataList = [
+        {
+          id: 'xa-012312o3i12',
+          houseNo: '0000001',
+          village: '天河小区',
+          blockNo: '11',
+          unitNo: '1',
+          roomNo: '101',
+          address: '11号楼1单元101',
+          rentType: '合租',
+          children: [
+          {id: 'xa-3u08u3io12', roomName: '房间A', rentStatus: '已出租', renterName: '张维真', rentalPrice: '3000'},
+          {id: 'xa-3u08u3io12', roomName: '房间B', rentStatus: '已出租', renterName: '陈碧', rentalPrice: '3000'},
+          {id: 'xa-3u08u3io12', roomName: '房间C', rentStatus: '已出租', renterName: '王二', rentalPrice: '1000'},
+          {id: 'xa-3u08u3io12', roomName: '房间D', rentStatus: '已出租', renterName: '张三丰', rentalPrice: '5000'},
+          {id: 'xa-3u08u3io12', roomName: '房间E', rentStatus: '未租', renterName: '', rentalPrice: '3200'},
+          {id: 'xa-3u08u3io12', roomName: '房间F', rentStatus: '未租', renterName: '', rentalPrice: '3000'}
+          ]
+        },
+        {
+          id: 'xa-012312o3i12',
+          houseNo: '0000002',
+          village: '宏源小区',
+          blockNo: '3',
+          unitNo: '1',
+          roomNo: '901',
+          address: '3号楼1单元901',
+          rentType: '整租',
+          rentStatus: '已出租',
+          renterName: '王小明',
+          rentalPrice: '3000',
+          children: []
+        },
+        {
+          id: 'xa-012312o3i12',
+          houseNo: '0000003',
+          village: '平安小区',
+          blockNo: '16',
+          unitNo: '',
+          roomNo: '301',
+          address: '16号楼301',
+          rentType: '整租',
+          rentStatus: '未租',
+          renterName: '',
+          rentalPrice: '3000',
+          children: []
+        },
+        {
+          id: 'xa-012312o3i12',
+          houseNo: '0000001',
+          village: '天河小区',
+          blockNo: '11',
+          unitNo: '1',
+          roomNo: '101',
+          address: '11号楼1单元101',
+          rentType: '合租',
+          children: [
+            {id: 'xa-3u08u3io12', roomName: '房间A', rentStatus: '已出租', renterName: '张维真', rentalPrice: '3000'},
+            {id: 'xa-3u08u3io12', roomName: '房间B', rentStatus: '已出租', renterName: '陈碧', rentalPrice: '3000'},
+            {id: 'xa-3u08u3io12', roomName: '房间C', rentStatus: '已出租', renterName: '王二', rentalPrice: '1000'},
+            {id: 'xa-3u08u3io12', roomName: '房间D', rentStatus: '已出租', renterName: '张三丰', rentalPrice: '5000'},
+            {id: 'xa-3u08u3io12', roomName: '房间E', rentStatus: '未租', renterName: '', rentalPrice: '3200'},
+            {id: 'xa-3u08u3io12', roomName: '房间F', rentStatus: '未租', renterName: '', rentalPrice: '3000'}
+          ]
+        },
+        {
+          id: 'xa-012312o3i12',
+          houseNo: '0000002',
+          village: '宏源小区',
+          blockNo: '3',
+          unitNo: '1',
+          roomNo: '901',
+          address: '3号楼1单元901',
+          rentType: '整租',
+          rentStatus: '已出租',
+          renterName: '李狗蛋',
+          rentalPrice: '3000',
+          children: []
+        },
+        {
+          id: 'xa-012312o3i12',
+          houseNo: '0000003',
+          village: '平安小区',
+          blockNo: '16',
+          unitNo: '0',
+          roomNo: '301',
+          address: '16号楼301',
+          rentType: '整租',
+          children: []
+        }
+      ]
     },
     mounted () {
 //      从缓存中获取房东角色的用户信息，由于要获取成对象类型的数据，所以要在第二个参数中传入 true
       let landlordInfo = cache.get(LANDLORD_INFO, true)
-      this.sendData.landlordId = landlordInfo.id
-      this.getHouseList()
+      this.sendData.landlordId = landlordInfo ? landlordInfo.id : ''
+//      this.getHouseList()
+      this.topLoading = true
+      this.renderList()
     },
     methods: {
+      renderList () {
+        let myVue = this
+        setTimeout(s => {
+          if (myVue.sendData.page < 3 && myVue.sendData.page > 0) {
+            this.topLoading = false
+            this.dataList.forEach(function (ele) {
+              myVue.houseList.push(ele)
+            })
+            myVue.sendData.page++
+            myVue.bottomLoaded = false
+          } else {
+            myVue.bottomLoaded = false
+            myVue.noMoreData = true
+          }
+        }, 1000)
+      },
       getHouseList () {
         let myVue = this
         this.get({
@@ -192,7 +241,8 @@
               myVue.houseList = []
               myVue.topLoading = false
               myVue.noMoreData = false
-              myVue.getHouseList()
+//              myVue.getHouseList()
+              myVue.renderList()
             }, 1000)
           }
         }
@@ -203,7 +253,8 @@
       loadBottom () {
         this.bottomLoaded = true
         this.$refs.loadmore.onBottomLoaded()
-        this.getHouseList()
+//        this.getHouseList()
+        this.renderList()
       },
       goToHouseDetail (data) {
         console.log(data)

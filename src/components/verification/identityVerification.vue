@@ -7,7 +7,8 @@
         </div>
       </div>
       <div class="banner">
-        <img src="http://dev-esheyi.yingjiashenghuo.com/xaImages/banner-heShen2x.png" alt="">
+        <!--<img src="http://dev-esheyi.yingjiashenghuo.com/xaImages/banner-heShen2x.png" alt="">-->
+        <img src="../../assets/img/banner-heShen2x.png" alt="">
       </div>
       <div class="group">
         <div class="group-title">请确认以下合约内容，签约成功后即具备法律效力</div>
@@ -156,7 +157,8 @@
     top:0;
     width: 0.5rem;
     height: 100%;
-    background: url("http://dev-esheyi.yingjiashenghuo.com/xaImages/icon-file-2x.png") center center no-repeat;
+    /*background: url("http://dev-esheyi.yingjiashenghuo.com/xaImages/icon-file-2x.png") center center no-repeat;*/
+    background: url("../../assets/img/icon-file-2x.png") center center no-repeat;
     -webkit-background-size: contain;
     background-size: contain;
   }

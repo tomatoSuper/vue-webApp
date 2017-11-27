@@ -1,11 +1,11 @@
 <template>
     <div class="layout" :style="{height:deviceHeight+'px'}">
         <div class="main">
-          <p class="title">欢迎使用雄安租房</p>
-          <p><a class="deal-search" @click="toLanlord" href="javascript:;"><img src="../assets/img/ico-deal.png" alt=""></a><span>我是房东</span></p>
-          <p><a class="listing-search" @click="toRenter" href="javascript:;"><img src="../assets/img/ico-listing.png" alt=""></a><span>我是租客</span></p>
+          <p class="title">欢迎使用</p>
+          <p><a class="deal-search" @click="toLanlord" href="javascript:;"><img src="../assets/img/ico-deal.png" alt=""></a><span>我是Role_A</span></p>
+          <p><a class="listing-search" @click="toRenter" href="javascript:;"><img src="../assets/img/ico-listing.png" alt=""></a><span>我是Role_B</span></p>
         </div>
-        <p class="footer">©2017 研耀(上海)信息科技有限公司</p>
+        <p class="footer">©2017 xx信息科技有限公司</p>
     </div>
 </template>
 <script>

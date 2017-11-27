@@ -15,12 +15,12 @@
             <div class="group-title">房源信息</div>
             <div class="group-content clearfix houseInfo">
               <div class="cover-photo">
-                <img v-if="houseInfo.houseImages && houseInfo.houseImages.length" :src="houseInfo.houseImages[0].imageUrl" alt="封面图片">
+                <img @click="swipe.isShow = true" v-if="swipe.dataList && swipe.dataList.length" :src="swipe.dataList[0].imageUrl" alt="封面图片">
                 <img v-else :src="'http://dev-esheyi.yingjiashenghuo.com/xaImages/unImage.png'" alt="封面图片">
               </div>
               <div class="house-msg">
                 <p class="house-address">
-                  {{houseInfo.cityName + houseInfo.districtName + houseInfo.address + houseInfo.vilage}}
+                  {{houseInfo.cityName + houseInfo.districtName + houseInfo.address + houseInfo.village}}
                   {{houseInfo.blockNo===''?'':houseInfo.blockNo+'号楼'}}{{houseInfo.unitNo===''?'':houseInfo.unitNo+'单元'}}{{houseInfo.roomNo===''?'':houseInfo.roomNo+'室'}}
                 </p>
                 <p class="houseNo">编码：{{houseInfo.serialNum}}</p>
@@ -109,6 +109,18 @@
             >下一步</button>
           </div>
         </form>
+      </div>
+      <div class="dialog-cover" v-show="swipe.isShow" @click.stop.prevent="closeSwpPanel">
+        <div class="banner block-center-middle" @click.stop.prevent="true">
+          <mt-swipe :auto="0" :showIndicators="false" @change="handleChange">
+            <template v-for="img in swipe.dataList">
+              <mt-swipe-item>
+                <img :src="img.imageUrl" alt="">
+              </mt-swipe-item>
+            </template>
+          </mt-swipe>
+          <div v-if="swipe.dataList.length" class="swp-count">{{swipe.activeIndex}} / {{swipe.dataList.length}}</div>
+        </div>
       </div>
       <mt-datetime-picker
         ref="dateStart"
@@ -210,7 +222,13 @@
           dateEnd: new Date('2020-12-31'),
           dateCur: new Date()
         },
-        houseInfo: {}
+        houseInfo: {},
+        swipe: {
+          isShow: false,
+          activeIndex: 1,
+          dataList: []
+        },
+        houseImages: []
       }
     },
     created () {
@@ -226,7 +244,25 @@
     },
     mounted () {
       this.contract.houseId = this.$route.query.houseId
-      this.getHouseDetail()
+      this.houseInfo = {
+        cityName: '雄安市',
+        districtName: '安新县',
+        address: 'XX路',
+        village: '天河小区',
+        blockNo: '9',
+        unitNo: '2',
+        roomNo: '302',
+        serialNum: 'XA_137897123',
+        houseImages: [
+          {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123814_20170510103843.png'},
+          {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123838_20170510103843.png'},
+          {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123820_20170510103843.png'},
+          {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123827_20170510103843.png'},
+          {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123833_20170510103843.png'}
+        ]
+      }
+      this.swipe.dataList = this.houseInfo.houseImages
+//      this.getHouseDetail()
     },
     methods: {
       getHouseDetail () {
@@ -240,6 +276,12 @@
             console.log(myVue.houseInfo)
           }
         })
+      },
+      handleChange (index) {
+        this.swipe.activeIndex = index + 1
+      },
+      closeSwpPanel () {
+        this.swipe.isShow = false
       },
       certificateTypeClick () {
         this.$refs.certificateType.showMask()
@@ -289,40 +331,41 @@
       },
       goToNext () {
         console.log(this.contract)
-//        this.$router.push({path: '/contractInfo'})
         let myVue = this
         let houseId = this.contract.houseId
-//        this.$router.push({path: '/contractToRenter', query: {contractNo: contractNo}})
         this.$validator.validateAll().then((result) => {
           console.log(createContractPath)
           if (houseId) {
             if (result) {
-//              this.$router.push({path: '/identityVerification', query: {houseId}})
-              myVue.contract.contractValidityStartTime += ' 00:00:00'
-              myVue.post({
-                role: 'landlord',
-                url: createContractPath,
-                sendData: myVue.contract,
-                success (data) {
-                  console.log(data)
-//                  ac2cc473d580477f8988651882e72888
-                  console.log(321312)
-                  let id = data.data
-                  this.$router.push({path: '/contractInfo', query: {id, roleName: 'landlord'}})
-                },
-                failed (data) {
-                  console.log(data)
-                },
-                error (d) {
-                  console.log(d)
-                }
-              })
+              this.$router.push({path: '/uploadFile', query: {contractNo: new Date().getTime()}})
             }
           } else {
             myVue.$toast({
               message: '无房源信息!!',
               duration: 1000
             })
+          }
+        })
+      },
+      submitForm () {
+        let myVue = this
+        myVue.contract.contractValidityStartTime += ' 00:00:00'
+        myVue.post({
+          role: 'landlord',
+          url: createContractPath,
+          sendData: myVue.contract,
+          success (data) {
+            console.log(data)
+//                  ac2cc473d580477f8988651882e72888
+            console.log(321312)
+            let id = data.data
+            this.$router.push({path: '/contractInfo', query: {id, roleName: 'landlord'}})
+          },
+          failed (data) {
+            console.log(data)
+          },
+          error (d) {
+            console.log(d)
           }
         })
       },
@@ -399,5 +442,21 @@
   button.btn {
     width: 100%;
     margin:0.4rem 0;
+  }
+  .banner {
+    position: absolute;
+    width: 100%;
+    height:4.8rem;
+    /*background-color: #fff;*/
+  }
+  .swp-count {
+    position: absolute;
+    bottom:0;
+    right:0;
+    padding:0 0.3rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    line-height:0.6rem;
+    font-size:0.32rem;
   }
 </style>

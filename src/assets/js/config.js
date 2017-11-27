@@ -42,3 +42,8 @@ export const dealVillageListPath = globalHost + '/agent-service/api/dealHouseInf
 export const ListingVillageListPath = globalHost + '/agent-service/api/listingHouseInfo/getVillageList.do'
 export const ListingHouseListPath = globalHost + '/agent-service/api/listingHouseInfo/getHouseList.do'
 export const ListingDetailPath = globalHost + '/agent-service/api/listingHouseInfo/getDetail.do'
+export const getRandom = function () {
+  let differentMarker = String(Math.random())
+  differentMarker = differentMarker.substr(2, differentMarker.length - 1)
+  return differentMarker
+}

@@ -46,6 +46,7 @@
 </template>
 <script>
   import { TENANT_TOKEN, zoneListPath } from '../../assets/js/config'
+  import { zoneDataList } from '../../assets/js/zoneList'
   import cache from '../../assets/js/cache'
   import dblRange from '../bricksSon/doubleRange.vue'
   import cascade from '../bricksSon/zoneLink.vue'
@@ -130,6 +131,8 @@
 //        }
 //      }
 //      this.post(getZoneListOption)
+      this.zoneList.dataList = zoneDataList
+      this.zoneList.dataList.unshift({id: '', zoneName: '不限', subZone: []})
     },
     methods: {
       onFocus () {

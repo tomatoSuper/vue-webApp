@@ -26,9 +26,12 @@ export default {
   }
   .transform-enter-active, .transform-leave-active {
     transition: all .3s linear;
+    height:auto;
+    overflow: visible;
   }
   .transform-enter, .transform-leave-active {
     opacity: 0;
+    overflow: hidden;
     -webkit-transform: translate(-100%,0);
     -moz-transform: translate(-100%,0);
     -ms-transform: translate(-100%,0);

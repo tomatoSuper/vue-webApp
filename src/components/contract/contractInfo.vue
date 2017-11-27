@@ -35,7 +35,7 @@
             <p class="group-row clearfix"><label>租赁期</label><span>{{contractInfo.contractValidityStartTime | date}}--{{contractInfo.contractValidityEndTime | date}}</span></p>
             <p class="group-row clearfix"><label>总租金</label><span>{{contractInfo.totalRent}}元</span></p>
             <p class="group-row clearfix"><label>交租日</label><span>每月{{contractInfo.payRentDate}}日</span></p>
-            <p class="group-row clearfix"><label>支付方式</label><span>{{contractInfo.payWay}}</span></p>
+            <p class="group-row clearfix"><label>支付方式</label><span>{{contractInfo.payMode}}</span></p>
             <p class="group-row clearfix"><label>押金</label><span>{{contractInfo.deposit}}元</span></p>
             <p class="group-row clearfix"><label>提前天数</label><span>提前{{contractInfo.daysAhead}}天交租</span></p>
           </div>
@@ -106,39 +106,33 @@
           landlord: '',
           signResult: ''
         },
-        contractInfo: {}
-//        contactInfo: {
-//          contractNo: '',
-//          status: '待确认',
-//          status: '生效中',
-//          landlord: {
-//            name: '张三',
-//            mobile: '13868511635',
-//            house: '上海市浦东新区花木苑19栋64号401室'
-//          },
-//          renter: {
-//            name: '花木兰',
-//            mobile: '15821049096',
-//            CertificateNo: '我是证件号码'
-//          },
-//          contract: {
-//            startDate: '2017.11.16',
-//            endDate: '2018.11.16',
-//            payDate: '10',
-//            deposit: '我是押金',
-//            payMode: '一月一付',
-//            beforeTime: '3',
-//            AllRentPrice: '6000',
-//            unitRentPrice: '3000'
-//          }
-//        }
+        contractInfo: {
+          id: '',
+          contractNo: 'contract_1209923',
+          contractTerminationDate: '',
+          contractStatus: 0,
+          landlordName: '张三',
+          landlordPhone: '13868511635',
+          leaseAddress: '上海市浦东新区花木苑19栋64号401室',
+          tenantName: '花木兰',
+          tenantPhone: '15821049096',
+          tenantIdCard: '我是证件号码',
+          contractValidityStartTime: '2017.11.16',
+          contractValidityEndTime: '2018.11.16',
+          payRentDate: '10',
+          deposit: '我是押金',
+          payMode: '一月一付',
+          daysAhead: '3',
+          totalRent: '6000',
+          unitRentPrice: '3000'
+        }
       }
     },
     created () {
       console.log('contactInfo')
       console.log(renterLeaseDetailPath)
       console.log(contractStatusList)
-      this.id = this.$route.query.id
+      this.contractInfo.id = this.$route.query.id
       this.roleName = this.$route.query.roleName
       console.log(this.$route.query)
       if (this.roleName === 'landlord') {
@@ -152,10 +146,10 @@
       }
     },
     mounted () {
-      this.getDetails()
+//      this.getDetails()
       let status = this.$route.query.status
       if (status) {
-        this.contactInfo.status = status
+        this.contractInfo.status = status
       }
     },
     methods: {

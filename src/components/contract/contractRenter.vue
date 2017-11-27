@@ -8,7 +8,8 @@
     </div>
     <div class="page-container">
       <div class="sign-progress">
-        <img src="http://dev-esheyi.yingjiashenghuo.com/xaImages/rent-sign-2-2x.png" alt="">
+        <!--<img src="http://dev-esheyi.yingjiashenghuo.com/xaImages/rent-sign-2-2x.png" alt="">-->
+        <img src="../../assets/img/rent-sign-2-2x.png" alt="">
       </div>
       <form name="contractRenter" novalidate @submit.prevent="identityVerification"  role="form">
         <div class="group">

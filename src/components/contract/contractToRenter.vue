@@ -47,7 +47,7 @@
       let token = cache.get(TENANT_TOKEN)
 //      如果获取不到token，说明是非法强跳域名过来的，那么将路由跳转去登录页
       if (token === null) {
-        this.$router.push({ path: '/' })
+//        this.$router.push({ path: '/' })
       } else {
       }
     },

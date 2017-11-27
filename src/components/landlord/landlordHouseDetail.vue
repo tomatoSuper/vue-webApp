@@ -37,15 +37,15 @@
             <p class="group-row clearfix"><label>付款方式</label><span>{{houseInfo.payMode===''?'':houseInfo.payMode}}</span></p>
             <p class="group-row clearfix">
               <label>房源设施</label>
-              <span class="canOpen" style="padding-right: 0.3rem;" @click.stop.prevent="openHardwareList">{{houseInfo.hardware.split(',').length?'共'+houseInfo.hardware.split(',').length+'个':''}}</span>
+              <span class="canOpen" style="padding-right: 0.3rem;" @click.stop.prevent="openHardwareList">{{ hardwareList.length?'共'+hardwareList.length+'个':''}}</span>
             </p>
-            <ul class="group-row hardware-list clearfix" :class="folding.isOpen?'':'in'" ref="hardwareList">
-              <li v-for="itm in houseInfo.hardware.split(',')">{{itm}}</li>
+            <ul class="group-row hardware-list clearfix" :class="folding.isOpen? '':'in'" :style="{height: folding.isOpen?(Math.ceil(hardwareList.length / 4) * folding.unitHeight) +'px':'0px'}" ref="hardwareList">
+              <li v-for="itm in hardwareList">{{itm}}</li>
             </ul>
             <p class="group-row clearfix"><label>房源简介</label><span>{{houseInfo.remark}}</span></p>
-            <p class="group-row clearfix" @click.stop.prevent="showDetailImags">
+            <p class="group-row clearfix" @click.stop.prevent="showDetailImages">
               <label>房源图片</label>
-              <span class="canOpen" style="padding-right: 0.3rem;">{{houseInfo.houseImages.length?'共'+houseInfo.houseImages.length+'个':'无图片信息'}}</span>
+              <span class="canOpen" style="padding-right: 0.3rem;">{{swipe.dataList.length?'共'+swipe.dataList.length+'个':'无图片信息'}}</span>
             </p>
           </div>
         </div>
@@ -70,14 +70,14 @@
       </div>
       <div class="dialog-cover" v-show="swipe.isShow" @click.stop.prevent="closeSwpPanel">
         <div class="banner block-center-middle" @click.stop.prevent="true">
-          <mt-swipe :auto="0" :showIndicators="false" @change="handleChange">
+          <mt-swipe :auto="0" :showIndicators="false" :prevent="true" @change="handleChange">
             <template v-for="img in swipe.dataList">
               <mt-swipe-item>
                 <img :src="img.imageUrl" alt="">
               </mt-swipe-item>
             </template>
           </mt-swipe>
-          <div v-if="houseInfo.houseImages.length" class="swp-count">{{swipe.activeIndex}} / {{houseInfo.houseImages.length}}</div>
+          <div v-if="swipe.dataList.length" class="swp-count">{{swipe.activeIndex}} / {{swipe.dataList.length}}</div>
         </div>
       </div>
     </div>
@@ -97,9 +97,10 @@
           dataList: []
         },
         folding: {
-          offsetHeight: '',
+          unitHeight: '53',
           isOpen: false
         },
+        hardwareList: [],
         houseInfo: {}
       }
     },
@@ -110,54 +111,54 @@
       let token = cache.get(LANDLORD_TOKEN)
 //      如果获取不到token，说明是非法强跳域名过来的，那么将路由跳转去登录页
       if (token === null) {
-        this.$router.push({ path: '/' })
+//        this.$router.push({ path: '/' })
       } else {
       }
     },
     mounted () {
-//      this.houseInfo = {
-//        applyStatus: '申请状态',
-//        rentStatus: '出租状态',
-//        serialNum: '序列号',
-//        cityName: '雄安市',
-//        districtName: '安新县',
-//        address: '路信息',
-//        vilage: '天河小区',
-//        blockNo: '5',
-//        unitNo: '2',
-//        roomNo: '401',
-//        houseType: '3室1厅2卫',
-//        floorNo: '4',
-//        door: '01',
-//        parentId: '大门id',
-//        buildingArea: '100',
-//        direct: '南',
-//        rentType: '租房类型',
-//        rentalPrice: '3000',
-//        payMode: '付款方式',
-//        hardware: '洗衣机,空调,电视机,洗衣机,空调,电视机',
-//        houseImages: [
-//          {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123814_20170510103843.png'},
-//          {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123838_20170510103843.png'},
-//          {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123820_20170510103843.png'},
-//          {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123827_20170510103843.png'},
-//          {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123833_20170510103843.png'}
-//        ],
-//        houseAuthImages: [
-//          {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123820_20170510103843.png'},
-//          {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123827_20170510103843.png'},
-//          {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123833_20170510103843.png'}
-//        ],
-//        source: '房源来源',
-//        ownerId: '房东id',
-//        bedroomCnt: '卧室数量',
-//        parlourCnt: '客厅数量',
-//        toiletCnt: '卫生间数量',
-//        remark: '房源备注房源备注房源备注房源备注房源备'
-//      }
-//      this.swipe.dataList = this.houseInfo.houseImages
-//      let myVue = this
-      this.getDetail()
+      this.houseInfo = {
+        applyStatus: '申请状态',
+        rentStatus: '空置',
+        serialNum: '序列号',
+        cityName: '雄安市',
+        districtName: '安新县',
+        address: '路信息',
+        vilage: '天河小区',
+        blockNo: '5',
+        unitNo: '2',
+        roomNo: '401',
+        houseType: '3室1厅2卫',
+        floorNo: '4',
+        door: '01',
+        parentId: '大门id',
+        buildingArea: '100',
+        direct: '南',
+        rentType: '租房类型',
+        rentalPrice: '3000',
+        payMode: '付款方式',
+        hardware: '洗衣机,空调,电视机,洗衣机,空调,电视机',
+        houseImages: [
+          {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123814_20170510103843.png'},
+          {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123838_20170510103843.png'},
+          {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123820_20170510103843.png'},
+          {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123827_20170510103843.png'},
+          {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123833_20170510103843.png'}
+        ],
+        houseAuthImages: [
+          {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123820_20170510103843.png'},
+          {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123827_20170510103843.png'},
+          {imageUrl: 'http://120.55.66.146:8080/esheyi-res/public/uploads/sale/f540fdb8b0d6462881f1d6bdea9f3fbc/QQ截图20170509123833_20170510103843.png'}
+        ],
+        source: '房源来源',
+        ownerId: '房东id',
+        bedroomCnt: '卧室数量',
+        parlourCnt: '客厅数量',
+        toiletCnt: '卫生间数量',
+        remark: '房源备注房源备注房源备注房源备注房源备'
+      }
+      this.swipe.dataList = this.houseInfo.houseImages
+      this.hardwareList = this.houseInfo.hardware.split(',')
+//      this.getDetail()
     },
     methods: {
       getDetail () {
@@ -171,7 +172,7 @@
           }
         })
       },
-      showDetailImags () {
+      showDetailImages () {
         this.swipe.isShow = this.houseInfo.houseImages.length ? 1 : 0
       },
       checkAuthStatus (data) {
@@ -188,11 +189,11 @@
         this.swipe.activeIndex = index + 1
       },
       closeSwpPanel () {
-        this.swipe.isShow = false
+        this.swipe.isShow = 0
       },
       openHardwareList () {
         this.folding.isOpen = !this.folding.isOpen
-        console.log(this.$refs.hardwareList.offsetHeight)
+//        console.log(this.$refs.hardwareList.offsetHeight)
       }
     }
   }
@@ -211,16 +212,15 @@
     padding: 0;
   }
   .hardware-list {
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    -ms-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    transition: all 0.3s;
-    overflow: visible;
-    height:auto;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -ms-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+    /*overflow: visible;*/
+    overflow: hidden;
   }
   .hardware-list.in {
-    overflow: hidden;
     height: 0;
   }
   .hardware-list li {
